@@ -68,12 +68,6 @@ app.load = function() {
     // notification handler
     app.notify = new Notify();
 
-    // retriever for loading/saving files
-    app.retriever = new FileRetriever({
-      scriptUrl: 'fileretriever.php',
-      notify: app.notify
-    });
-
     // default json document
     var json = {
       "array": [1, 2, 3],
