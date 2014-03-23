@@ -9,3 +9,11 @@ To build run the following commands.
 npm install
 grunt build
 ```
+
+To create/update the github page simply run
+
+```
+grunt gh-pages
+```
+
+and point your browser to [http://slopjong.github.io/jsoneditor-app/](http://slopjong.github.io/jsoneditor-app/).
