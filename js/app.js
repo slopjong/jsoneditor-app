@@ -149,46 +149,6 @@ app.load = function() {
     // web page resize handler
     jsoneditor.util.addEventListener(window, 'resize', app.resize);
 
-    // clear button
-    var domClear = document.getElementById('clear');
-    domClear.onclick = app.clearFile;
-
-    /* TODO: enable clicking on open to execute the default, "open file"
-     // open button
-     var domOpen = document.getElementById('open');
-     var domOpenMenuButton = document.getElementById('openMenuButton');
-     domOpen.onclick = function (event) {
-     var target = event.target || event.srcElement;
-     if (target == domOpenMenuButton ||
-     (event.offsetX > domOpen.offsetWidth - domOpenMenuButton.offsetWidth)) {
-     // clicked on the menu button
-     }
-     else {
-     app.openFile();
-     }
-     };
-     */
-
-    // menu button open file
-    var domMenuOpenFile = document.getElementById('menuOpenFile');
-    domMenuOpenFile.onclick = function (event) {
-      app.openFile();
-      event.stopPropagation();
-      event.preventDefault();
-    };
-
-    // menu button open url
-    var domMenuOpenUrl = document.getElementById('menuOpenUrl');
-    domMenuOpenUrl.onclick = function (event) {
-      app.openUrl();
-      event.stopPropagation();
-      event.preventDefault();
-    };
-
-    // save button
-    var domSave = document.getElementById('save');
-    domSave.onclick = app.saveFile;
-
     // set focus on the code editor
     codeEditor.focus();
 
@@ -232,52 +192,6 @@ app.openCallback = function (err, data) {
 };
 
 /**
- * Open a file explorer to select a file and open the file
- */
-app.openFile = function() {
-  app.retriever.loadFile(app.openCallback);
-};
-
-/**
- * Open a url. If no url is provided as parameter, a dialog will be opened
- * to select a url.
- * @param {String} [url]
- */
-app.openUrl = function (url) {
-  if (!url) {
-    app.retriever.loadUrlDialog(app.openCallback);
-  }
-  else {
-    app.retriever.loadUrl(url, app.openCallback);
-  }
-};
-
-/**
- * Open a file explorer to save the file.
- */
-app.saveFile = function () {
-  // first synchronize both editors contents
-  if (app.lastChanged == treeEditor) {
-    app.treeToCode();
-  }
-  /* TODO: also sync from code to tree editor? will clear the history ...
-   if (app.lastChanged == codeEditor) {
-   app.CodeToEditor();
-   }
-   */
-  app.lastChanged = undefined;
-
-  // save the text from the code editor
-  // TODO: show a 'saving...' notification
-  var data = codeEditor.getText();
-  app.retriever.saveFile(data, function (err) {
-    if (err) {
-      app.notify.showError(err);
-    }
-  });
-};
-
-/**
  * Format a JSON parse/stringify error as HTML
  * @param {Error} err
  * @returns {string}
@@ -303,13 +217,11 @@ app.clearFile = function () {
 };
 
 app.resize = function() {
-  var domMenu = document.getElementById('menu');
   var domTreeEditor = document.getElementById('treeEditor');
   var domCodeEditor = document.getElementById('codeEditor');
   var domSplitter = document.getElementById('splitter');
   var domSplitterButtons = document.getElementById('buttons');
   var domSplitterDrag = document.getElementById('drag');
-  var domAd = document.getElementById('ad');
 
   var margin = 15;
   var width = (window.innerWidth || document.body.offsetWidth ||
@@ -370,15 +282,5 @@ app.resize = function() {
     domTreeEditor.style.display = (value == 1) ? 'none' : '';
     domTreeEditor.style.left = Math.round(splitterLeft + splitterWidth) + 'px';
     domTreeEditor.style.width = Math.max(Math.round(width - splitterLeft - splitterWidth - 2), 0) + 'px';
-  }
-
-  // align main menu with ads
-  if (domMenu) {
-    if (adWidth) {
-      domMenu.style.right = (margin + (adWidth + margin)) + 'px';
-    }
-    else {
-      domMenu.style.right = margin + 'px';
-    }
   }
 };
