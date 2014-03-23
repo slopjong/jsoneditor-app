@@ -226,10 +226,6 @@ app.resize = function() {
   var margin = 15;
   var width = (window.innerWidth || document.body.offsetWidth ||
       document.documentElement.offsetWidth);
-  var adWidth = domAd ? domAd.clientWidth : 0;
-  if (adWidth) {
-    width -= (adWidth + margin);
-  }
 
   if (app.splitter) {
     app.splitter.setWidth(width);
