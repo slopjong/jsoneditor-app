@@ -63,7 +63,12 @@ app.treeToCode = function () {
  * Load the interface (tree editor, code editor, splitter)
  */
 // TODO: split the method load in multiple methods, it is too large
-app.load = function() {
+app.load = function(options) {
+
+  options = options || {
+    bootstrapEnabled: true
+  };
+
   try {
     // notification handler
     app.notify = new Notify();
@@ -148,6 +153,33 @@ app.load = function() {
 
     // enforce FireFox to not do spell checking on any input field
     document.body.spellcheck = false;
+
+    if (options.bootstrapEnabled) {
+      // we override the old container with the 'auto' div
+      container_parent = container.parentNode.parentNode;
+
+      var outer_divs = [];
+
+      var bootstrap_detected = false;
+
+      // this should be a while loop going the dom tree up, finding
+      // the node sequence we're looking for, the user could wrap the
+      // jsoneditor by other container block elements
+      for(var i=0; i<3; i++) {
+        container_parent = container_parent.parentNode;
+        outer_divs.push(container_parent);
+        // TODO: try to detect bootstrap here by looking for
+        //       the order .col* > .row > .container
+      }
+
+      bootstrap_detected = true;
+
+      if (bootstrap_detected) {
+        for(var i=0; i<outer_divs.length; i++) {
+          outer_divs[i].style.height = '100%';
+        }
+      }
+    }
   } catch (err) {
     try {
       app.notify.showError(err);
@@ -218,8 +250,14 @@ app.resize = function() {
   var domSplitterDrag = document.getElementById('drag');
 
   var margin = 15;
-  var width = (window.innerWidth || document.body.offsetWidth ||
-      document.documentElement.offsetWidth);
+
+  // This is how the original app calculated the available space.
+  // It's better, however, to get the tree editor parent's dimension
+  //var width = (window.innerWidth || document.body.offsetWidth ||
+  //    document.documentElement.offsetWidth);
+
+  // we take the parent node's width instead
+  width = domTreeEditor.parentNode.offsetWidth;
 
   if (app.splitter) {
     app.splitter.setWidth(width);
