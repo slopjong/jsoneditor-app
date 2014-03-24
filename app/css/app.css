@@ -1,16 +1,3 @@
-body, html {
-  font-family: arial, sans-serif;
-  font-size: 11pt;
-
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-
-  overflow: hidden;
-}
-
-/* TODO: enable the menu with keys (when openMenuButton is active) */
 
 #auto {
   width: 100%;
