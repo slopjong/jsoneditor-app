@@ -316,5 +316,8 @@ jsoneditor_app.resize = function() {
   }
 };
 
-jsoneditor_app.load();
-jsoneditor_app.resize();
+// TODO: is this x-browser-compatible? if not make it so
+window.onload = function() {
+  jsoneditor_app.load();
+  jsoneditor_app.resize();
+}
