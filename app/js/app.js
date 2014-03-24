@@ -315,3 +315,6 @@ jsoneditor_app.resize = function() {
     domTreeEditor.style.width = Math.max(Math.round(width - splitterLeft - splitterWidth - 2), 0) + 'px';
   }
 };
+
+jsoneditor_app.load();
+jsoneditor_app.resize();

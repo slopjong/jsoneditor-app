@@ -9,7 +9,7 @@
     <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="jsoneditor/jsoneditor-min.css" rel="stylesheet" type="text/css">
 
-    <!-- build:css styles/jsoneditor-app.css -->
+    <!-- build:css({.tmp,app}) styles/jsoneditor-app.css -->
     <link href="css/app.css" rel="stylesheet" type="text/css">
     <!-- endbuild -->
 
@@ -62,24 +62,19 @@
 
     <script type="text/javascript" src="jsoneditor/jsoneditor-min.js"></script>
 
-    <!-- build:js scripts/jsoneditor-app.js -->
+    <!-- build:js({.tmp,app}) scripts/jsoneditor-app.js -->
     <script type="text/javascript" src="js/notify.js"></script>
     <script type="text/javascript" src="js/splitter.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
     <!-- endbuild -->
 
-    <!-- build:js scripts/jsoneditor-deps.js -->
+    <!-- build:js({.tmp,app}) scripts/jsoneditor-deps.js -->
     <script type="text/javascript" src="lib/jsonlint/jsonlint.js"></script>
     <script type="text/javascript" src="lib/ace/ace.js"></script>
     <script type="text/javascript" src="lib/ace/mode-json.js"></script>
     <script type="text/javascript" src="lib/ace/theme-textmate.js"></script>
     <script type="text/javascript" src="lib/ace/theme-jsoneditor.js"></script>
     <!-- endbuild -->
-
-    <script type="text/javascript">
-        jsoneditor_app.load();
-        jsoneditor_app.resize();
-    </script>
 
 </body>
 </html>
