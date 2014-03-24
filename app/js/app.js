@@ -176,9 +176,12 @@ app.load = function(options) {
 
       if (bootstrap_detected) {
         for(var i=0; i<outer_divs.length; i++) {
-          outer_divs[i].style.height = '100%';
+//          outer_divs[i].style.height = '100%';
         }
       }
+
+      // quickfix, this should be done in css
+      document.getElementById('auto').style.height = '400px';
     }
   } catch (err) {
     try {
