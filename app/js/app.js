@@ -33,29 +33,29 @@
 var treeEditor = null;
 var codeEditor = null;
 
-var app = {};
+var jsoneditor_app = {};
 
 /**
  * Get the JSON from the code editor and load it in the tree editor
  */
-app.CodeToTree = function() {
+jsoneditor_app.CodeToTree = function() {
   try {
     treeEditor.set(codeEditor.get());
   }
   catch (err) {
-    app.notify.showError(app.formatError(err));
+    jsoneditor_app.notify.showError(jsoneditor_app.formatError(err));
   }
 };
 
 /**
  * Get the JSON from the tree editor and load it into the code editor
  */
-app.treeToCode = function () {
+jsoneditor_app.treeToCode = function () {
   try {
     codeEditor.set(treeEditor.get());
   }
   catch (err) {
-    app.notify.showError(app.formatError(err));
+    jsoneditor_app.notify.showError(jsoneditor_app.formatError(err));
   }
 };
 
@@ -63,7 +63,7 @@ app.treeToCode = function () {
  * Load the interface (tree editor, code editor, splitter)
  */
 // TODO: split the method load in multiple methods, it is too large
-app.load = function(options) {
+jsoneditor_app.load = function(options) {
 
   options = options || {
     bootstrapEnabled: true
@@ -71,7 +71,7 @@ app.load = function(options) {
 
   try {
     // notification handler
-    app.notify = new Notify();
+    jsoneditor_app.notify = new Notify();
 
     // default json document
     var json = {
@@ -89,22 +89,22 @@ app.load = function(options) {
       var url = qp.getValue('url');
       if (url) {
         json = {};
-        app.openUrl(url);
+        jsoneditor_app.openUrl(url);
       }
     }
 
     // Store whether tree editor or code editor is last changed
-    app.lastChanged = undefined;
+    jsoneditor_app.lastChanged = undefined;
 
     // code editor
     var container = document.getElementById("codeEditor");
     codeEditor = new jsoneditor.JSONEditor(container, {
       mode: 'code',
       change: function () {
-        app.lastChanged = codeEditor;
+        jsoneditor_app.lastChanged = codeEditor;
       },
       error: function (err) {
-        app.notify.showError(app.formatError(err));
+        jsoneditor_app.notify.showError(jsoneditor_app.formatError(err));
       }
     });
     codeEditor.set(json);
@@ -114,20 +114,20 @@ app.load = function(options) {
     treeEditor = new jsoneditor.JSONEditor(container, {
       mode: 'tree',
       change: function () {
-        app.lastChanged = treeEditor;
+        jsoneditor_app.lastChanged = treeEditor;
       },
       error: function (err) {
-        app.notify.showError(app.formatError(err));
+        jsoneditor_app.notify.showError(jsoneditor_app.formatError(err));
       }
     });
     treeEditor.set(json);
     // TODO: automatically synchronize data of code and tree editor? (tree editor should keep its state though)
 
     // splitter
-    app.splitter = new Splitter({
+    jsoneditor_app.splitter = new Splitter({
       container: document.getElementById('drag'),
       change: function () {
-        app.resize();
+        jsoneditor_app.resize();
       }
     });
 
@@ -135,18 +135,18 @@ app.load = function(options) {
     var toTree = document.getElementById('toTree');
     toTree.onclick = function () {
       this.focus();
-      app.CodeToTree();
+      jsoneditor_app.CodeToTree();
     };
 
     // button Tree-to-Code
     var toCode = document.getElementById('toCode');
     toCode.onclick = function () {
       this.focus();
-      app.treeToCode();
+      jsoneditor_app.treeToCode();
     };
 
     // web page resize handler
-    jsoneditor.util.addEventListener(window, 'resize', app.resize);
+    jsoneditor.util.addEventListener(window, 'resize', jsoneditor_app.resize);
 
     // set focus on the code editor
     codeEditor.focus();
@@ -185,7 +185,7 @@ app.load = function(options) {
     }
   } catch (err) {
     try {
-      app.notify.showError(err);
+      jsoneditor_app.notify.showError(err);
     }
     catch (e) {
       if (console && console.log) {
@@ -201,7 +201,7 @@ app.load = function(options) {
  * @param {Error} err
  * @param {String} data
  */
-app.openCallback = function (err, data) {
+jsoneditor_app.openCallback = function (err, data) {
   if (!err) {
     if (data != null) {
       codeEditor.setText(data);
@@ -211,12 +211,12 @@ app.openCallback = function (err, data) {
       }
       catch (err) {
         treeEditor.set({});
-        app.notify.showError(app.formatError(err));
+        jsoneditor_app.notify.showError(jsoneditor_app.formatError(err));
       }
     }
   }
   else {
-    app.notify.showError(err);
+    jsoneditor_app.notify.showError(err);
   }
 };
 
@@ -225,7 +225,7 @@ app.openCallback = function (err, data) {
  * @param {Error} err
  * @returns {string}
  */
-app.formatError = function (err) {
+jsoneditor_app.formatError = function (err) {
   var message = '<pre class="error">' + err.toString() + '</pre>';
   if (typeof(jsonlint) != 'undefined') {
     message +=
@@ -239,13 +239,13 @@ app.formatError = function (err) {
 /**
  * Clear the current file
  */
-app.clearFile = function () {
+jsoneditor_app.clearFile = function () {
   var json = {};
   codeEditor.set(json);
   treeEditor.set(json);
 };
 
-app.resize = function() {
+jsoneditor_app.resize = function() {
   var domTreeEditor = document.getElementById('treeEditor');
   var domCodeEditor = document.getElementById('codeEditor');
   var domSplitter = document.getElementById('splitter');
@@ -254,7 +254,7 @@ app.resize = function() {
 
   var margin = 15;
 
-  // This is how the original app calculated the available space.
+  // This is how the original jsoneditor_app calculated the available space.
   // It's better, however, to get the tree editor parent's dimension
   //var width = (window.innerWidth || document.body.offsetWidth ||
   //    document.documentElement.offsetWidth);
@@ -262,11 +262,11 @@ app.resize = function() {
   // we take the parent node's width instead
   width = domTreeEditor.parentNode.offsetWidth;
 
-  if (app.splitter) {
-    app.splitter.setWidth(width);
+  if (jsoneditor_app.splitter) {
+    jsoneditor_app.splitter.setWidth(width);
 
     // calculate horizontal splitter position
-    var value = app.splitter.getValue();
+    var value = jsoneditor_app.splitter.getValue();
     var showCodeEditor = (value > 0);
     var showTreeEditor = (value < 1);
     var showButtons = showCodeEditor && showTreeEditor;
