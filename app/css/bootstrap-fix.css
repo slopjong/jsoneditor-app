@@ -1,0 +1,9 @@
+/* We need to set the box sizing to content-box explicitly because the
+   json editor is relying on this box model whereas bootstrap is using
+   border-box */
+/* the container of the context menu is outside the jsoneditor div block */
+.jsoneditor-contextmenu ul {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}

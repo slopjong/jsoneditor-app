@@ -5,23 +5,25 @@
 
     <title>JSON Editor Online - Bootstrap Version</title>
 
-    <!-- bootstrap v3.0.3 -->
-    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!-- Not put in the vendor build section so that we can exchange it easily -->
     <link href="jsoneditor/jsoneditor-min.css" rel="stylesheet" type="text/css">
 
     <!-- build:css({.tmp,app}) styles/jsoneditor-app.css -->
     <link href="css/app.css" rel="stylesheet" type="text/css">
     <!-- endbuild -->
 
-    <style type="text/css">
-        div.convert-right {
-            background: url('jsoneditor/img/jsoneditor-icons.png') -0 -48px;
-        }
+    <!-- build:css styles/jsoneditor-fixes.css -->
+    <link href="css/bootstrap-fix.css" rel="stylesheet" type="text/css">
+    <link href="css/jsoneditor-fix.css" rel="stylesheet" type="text/css">
+    <!-- endbuild -->
 
-        div.convert-left {
-            background: url('jsoneditor/img/jsoneditor-icons.png') -24px -48px;
-        }
-    </style>
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- bootstrap 3.0.3 -->
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+
 </head>
 
 <body>
