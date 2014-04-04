@@ -197,6 +197,18 @@ module.exports = function (grunt) {
     'copy:dist',
     'cssmin',
     'uglify',
+    'usemin',
+    'htmlmin'
+  ]);
+
+  grunt.registerTask('build-withcache', [
+    'clean:dist',
+    'useminPrepare',
+    'autoprefixer',
+    'concat',
+    'copy:dist',
+    'cssmin',
+    'uglify',
     'rev',
     'usemin',
     'htmlmin'
